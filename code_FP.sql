@@ -4,9 +4,9 @@
 -- Імпортуйте дані за допомогою Import wizard.
 -- infectious_cases.csv
 
+create database if not exists pandemic;
 use pandemic;
 select * from infectious_cases;
-select * from infectious_cases_normalized;
 
 -- 2. Нормалізуйте таблицю infectious_cases. Збережіть у цій же схемі дві таблиці з нормалізованими даними.
 
@@ -63,6 +63,8 @@ Number_smallpox,
 Number_cholera_cases
 from infectious_cases
 join entity_code on infectious_cases.Entity = entity_code.entity and infectious_cases.Code = entity_code.code;
+
+select * from infectious_cases_normalized;
 
 -- 3. Проаналізуйте дані:
 -- Для кожної унікальної комбінації Entity та Code або їх id порахуйте середнє, мінімальне, максимальне значення та суму для атрибута Number_rabies.
@@ -131,6 +133,11 @@ Year_diff(year) as diff_years
 from infectious_cases_normalized
 inner join entity_code on entity_code.id = infectious_cases_normalized.entity_code_id;
 
+-- Потрібно побудувати іншу функцію — функцію, що рахує кількість захворювань за певний період. 
+-- Для цього треба поділити кількість захворювань на рік на певне число: 12 — для отримання середньої кількості захворювань на місяць, 
+-- 4 — на квартал або 2 — на півріччя. Таким чином, функція буде приймати два параметри: кількість захворювань на рік та довільний дільник. 
+-- Ви також маєте використати її — запустити на даних. Оскільки не всі рядки містять число захворювань, 
+-- вам необхідно буде відсіяти ті, що не мають чисельного значення (≠ '').
 
 
 
